@@ -1,6 +1,12 @@
 # duration-parser.js
 
+duration-parser.js is a light weight English time parser.  
 This module contains a class constructor Time that takes in a time string, and parses it into a usable form.
+
+## Install
+```bash
+$ npm install duration-parser.js
+```
 
 ## Example
 ```javascript

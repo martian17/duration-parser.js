@@ -175,7 +175,7 @@ class Time{
         }
         //else
         let args = splitNumbers(str).slice(1);
-        console.log(args);
+        //console.log(args);
         let t = 0;
         let success = false;
         for(let i = 0; i < args.length; i+=2){

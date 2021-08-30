@@ -1,11 +1,22 @@
 {
   "name": "duration-parser.js",
   "version": "1.0.1",
-  "description": "",
+  "description": "duration-parser.js - a light weight English time parser",
   "main": "time.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "martian17",
-  "license": "ISC"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/martian17/duration-parser.js.git"
+  },
+  "keywords": [
+    "duration", "parser", "time", "timer", "english"
+  ],
+  "bugs": {
+    "url": "https://github.com/martian17/duration-parser.js/issues"
+  },
+  "homepage": "https://github.com/martian17/duration-parser.js#readme"
 }
