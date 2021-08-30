@@ -1,11 +1,11 @@
 {
-  "name": "time",
-  "version": "1.0.0",
+  "name": "duration-parser.js",
+  "version": "1.0.1",
   "description": "",
   "main": "time.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "martian17",
   "license": "ISC"
 }
