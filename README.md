@@ -30,7 +30,7 @@ console.log(time.ms());//940000
 
 ### Postfix notations
 ```
-milliseconds: millis millisecond milliseconds milli ms ml");
+milliseconds: millis millisecond milliseconds milli ms ml
 seconds:      seconds second sec s snd
 minutes:      minutes minute mins m min
 hours:        hours hour hrs hur hr h
