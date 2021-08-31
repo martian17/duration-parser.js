@@ -25,19 +25,6 @@ const addPermutations = function(table,val,str){
     }
 };
 
-const formTable = function(){
-    let table = {};
-    for(let i = 0; i < arguments.length; i+=2){
-        let val = arguments[i+1];
-        let str = arguments[i];
-        let arr = str.split("");
-        for(let i = 0; i < arr.length; i++){
-            table[arr[i]] = val;
-        }
-    }
-    return table;
-};
-
 const timeTable = {};
 addPermutations(timeTable,0.001,"millis millisecond milliseconds milli ms ml");
 addPermutations(timeTable,timeval[0],"seconds second sec s snd");
@@ -50,107 +37,20 @@ timeTable[""] = timeval[1];
 //begin sign numeric dot numeric exp sign num
 //0     1    2       3   4       5   6    7
 
-const jumps = [
-    formTable("0123456789",2,"+-",1,".",3),    //0
-    formTable("0123456789",2,".",3),           //1
-    formTable("0123456789",2,".",3),           //2
-    formTable("0123456789",4),                 //3
-    formTable("0123456789",4,"Ee",5),          //4
-    formTable("0123456789",7,"+-",6),          //5
-    formTable("0123456789",7),                 //6
-    formTable("0123456789",7),                 //7
-];
-
 const splitNumbers = function(str){
-    let state = 0;
-    let tokens = [];//alternation of str num
-    let subtokens = [];
-    let subtoken = "";
-    for(let i = 0; i < str.length+1; i++){
-        let char = str[i]||"EOF";
-        //console.log(char,state,tokens,subtokens,subtoken);
-        if(state === 0){
-            if(char in jumps[0]){
-                state = jumps[0][char];
-                tokens.push(subtoken);
-                subtoken = char;
-                subtokens = [];
-            }else{//jumping to numbers
-                if(char !== "EOF")subtoken += char;
-            }
-        }else{
-            if(char in jumps[state]){
-                if(jumps[state][char] === state){//same subtoken
-                    subtoken += char;
-                }else{
-                    state = jumps[state][char];
-                    subtokens.push(subtoken);
-                    subtoken = char;
-                }
-            }else{//goes back to 0
-                subtokens.push(subtoken);
-                //console.log(char,state,tokens,subtokens,subtoken);
-                switch(state){
-                    case 1:
-                    //the token has ended with an error
-                    subtoken = tokens.pop()+subtokens.join("");
-                    i--;
-                    break;
-                    case 2:
-                    //the token has ended correctly
-                    tokens.push(parseInt(subtokens.join("")));
-                    subtoken = char;
-                    break;
-                    case 3:{
-                        //the token has ended with an error
-                        let last = subtokens.pop();
-                        subtoken = last;
-                        i--;
-                        let num = parseInt(subtokens.join(""));
-                        if(isNaN(num)){
-                            //console.log(char,state,tokens,subtokens,subtoken);
-                            subtoken = tokens.pop()+subtokens.join("")+subtoken;
-                        }else{
-                            tokens.push(num);
-                        }
-                        break;
-                    }
-                    case 4:
-                    //the token has ended correctly
-                    tokens.push(parseFloat(subtokens.join("")));
-                    subtoken = char;
-                    break;
-                    case 5:{
-                        //the token has ended with an error
-                        let last = subtokens.pop();
-                        subtoken = last;
-                        i--;
-                        tokens.push(parseFloat(subtokens.join("")));
-                        break;
-                    }
-                    case 6:{
-                        //the token has ended with an error
-                        let sign = subtokens.pop();
-                        let esin = subtokens.pop();
-                        subtoken = esin;
-                        i--;
-                        i -= sign.length;
-                        tokens.push(parseFloat(subtokens.join("")));
-                        break;
-                    }
-                    case 7:
-                    //number to completion
-                    tokens.push(parseFloat(subtokens.join("")));
-                    subtoken = char;
-                    break;
-                }
-                state = 0;
-            }
-        }
+    const matches = str.matchAll(/(?:[0-9]+(?:\.[0-9]+)?|\.[0-9]+)(?:e[\+\-]?[0-9]+)?/g);
+    let tokens = [];
+    let previousEnd = 0;
+    for(const match of matches){
+        console.log(match);
+        //catch up to the match index
+        tokens.push(str.slice(previousEnd,match.index));
+        //push the body
+        tokens.push(parseFloat(match[0]));
+        previousEnd = match.index+match[0].length;
     }
-    if(subtoken !== "EOF"){
-        tokens.push(subtoken);
-    }
+    tokens.push(str.slice(previousEnd-str.length));
+    console.log(tokens);
     return tokens;
 };
 
