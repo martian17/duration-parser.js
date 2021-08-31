@@ -1,18 +1,14 @@
-const splitNumbers = function(str){
-    const matches = str.matchAll(/(?:[0-9]+(?:\.[0-9]+)?|\.[0-9]+)(?:e[\+\-]?[0-9]+)?/g);
-    let tokens = [];
-    let previousEnd = 0;
-    for(const match of matches){
-        console.log(match);
-        //catch up to the match index
-        tokens.push(str.slice(previousEnd,match.index));
-        //push the body
-        tokens.push(parseFloat(match[0]));
-        previousEnd = match.index+match[0].length;
-    }
-    tokens.push(str.slice(previousEnd-str.length));
-    console.log(tokens);
-    return tokens;
-};
+const Time = require("./time.js");
 
-splitNumbers("10fafabefd3.14e+12afalbhfd5e12asw");
+let time;
+time = new Time("10 hours and 5 seconds");
+console.log(time.toString());//10 hours 5 seconds
+console.log(time.seconds());//36005
+console.log(time.ms());//36005000
+
+time = new Time("3:2:1");
+console.log(time.toString());//3 hours 2 minutes 1 seconds
+
+//no need for spaces & scientific notation supported
+time = new Time("7mins 5.2e+2s");
+console.log(time.ms());//940000

@@ -42,7 +42,7 @@ const splitNumbers = function(str){
     let tokens = [];
     let previousEnd = 0;
     for(const match of matches){
-        console.log(match);
+        //console.log(match);
         //catch up to the match index
         tokens.push(str.slice(previousEnd,match.index));
         //push the body
@@ -50,7 +50,7 @@ const splitNumbers = function(str){
         previousEnd = match.index+match[0].length;
     }
     tokens.push(str.slice(previousEnd-str.length));
-    console.log(tokens);
+    //console.log(tokens);
     return tokens;
 };
 
